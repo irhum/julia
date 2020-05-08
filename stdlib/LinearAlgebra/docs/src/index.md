@@ -1,7 +1,7 @@
 # Linear Algebra
 
 ```@meta
-DocTestSetup = :(using LinearAlgebra)
+DocTestSetup = :(using LinearAlgebra, SparseArrays, SuiteSparse)
 ```
 
 In addition to (and as part of) its support for multi-dimensional arrays, Julia provides native implementations
@@ -306,12 +306,20 @@ of the Linear Algebra documentation.
 | `Schur`            | [Schur decomposition](https://en.wikipedia.org/wiki/Schur_decomposition)                                       |
 | `GeneralizedSchur` | [Generalized Schur decomposition](https://en.wikipedia.org/wiki/Schur_decomposition#Generalized_Schur_decomposition) |
 
+For sparse matrices, these factorizations are available:
+
+| Type                              | Description                                   |
+|:--------------------------------- |:--------------------------------------------- |
+| `SuiteSparse.CHOLMOD.Factor`      | Cholesky factorization                        |
+| `SuiteSparse.UMFPACK.UmfpackLU`   | LU factorization                              |
+| `SuiteSparse.SPQR.QRSparse`       | QR factorization                              |
 
 
 ## Standard functions
 
 Linear algebra functions in Julia are largely implemented by calling functions from [LAPACK](http://www.netlib.org/lapack/).
- Sparse factorizations call functions from [SuiteSparse](http://faculty.cse.tamu.edu/davis/suitesparse.html).
+ Sparse matrix factorizations call functions from [SuiteSparse](http://suitesparse.com). Other sparse solvers are available
+ as Julia packages.
 
 ```@docs
 Base.:*(::AbstractMatrix, ::AbstractMatrix)
@@ -344,9 +352,14 @@ LinearAlgebra.CholeskyPivoted
 LinearAlgebra.cholesky
 LinearAlgebra.cholesky!
 LinearAlgebra.lowrankupdate
+SuiteSparse.CHOLMOD.lowrankupdate
 LinearAlgebra.lowrankdowndate
+SuiteSparse.CHOLMOD.lowrankdowndate
 LinearAlgebra.lowrankupdate!
+SuiteSparse.CHOLMOD.lowrankupdate!
 LinearAlgebra.lowrankdowndate!
+SuiteSparse.CHOLMOD.lowrankdowndate!
+SuiteSparse.CHOLMOD.lowrankupdowndate!
 LinearAlgebra.LDLt
 LinearAlgebra.ldlt
 LinearAlgebra.ldlt!
